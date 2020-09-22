@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Create New Recipes</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.food.label }}<br>
+            {{ form.food(size=32) }}
+        </p>
+        <p>
+            {{ form.time.label }}<br>
+            {{ form.time(size=32) }}
+        </p>
+        <p>
+            {{ form.temp.label }}<br>
+            {{ form.temp(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <h1>Welcome to Recipes Blog!</h1>
+        
+        {% for post in posts %}
+        <div><p> <b>{{ post.food }}</b> : Time to prepare: <b>{{ post.time }} minutes, </b>Temperature: <b>{{ post.temp }} °C</b></p></div>
+        {% endfor %}
+
+{% endblock %}
