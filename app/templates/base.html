@@ -10,7 +10,7 @@
         <div>
             Recipes:
             <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('post') }}">Create Recipe</a>
+            <a href="{{ url_for('create_post') }}">Create Recipe</a>
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}
