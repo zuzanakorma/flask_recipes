@@ -1,11 +1,31 @@
 {% extends "base.html" %}
-
 {% block content %}
+    <h1>Welcome to Recipes Blog</h1>
+    {% for post in posts.items %}
+    <article class="media content-section">
+      <img class="rounded article-img" src= "{{ url_for('static', filename='post_pics/' + post.image_file ) }}">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+          <small class="text-muted">{{ post.timestamp.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <h2><a class="article-title" href="{{ url_for('create_post', post_id=post.id) }}">{{ post.title }}</a></h2>
+        <p class="article-content">Time: {{ post.time }}</p>
+        <p class="article-content">Temperature: {{ post.temperature }}  °C</p>
+        <p class="article-content"><b>Recipe:</b> </br>{{ post.recipe }}</p>
+      </div>
+    </article>
+{% endfor %}
+{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+  {% if posts.page == page_num %}
+    <a class="btn btn-info mb-4" href="{{ url_for('index',  page=page_num) }}">{{ page_num }}</a>
+  {% else %}
+    <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+  {% endif %}
+{% else %}
+  ...
+{% endif %}
+{% endfor %}
+{% endblock content %}
 
-        <h1>Welcome to Recipes Blog!</h1>
-        
-        {% for post in posts %}
-        <div><p> <b>{{ post.food }}</b> : Time to prepare: <b>{{ post.time }} minutes, </b>Temperature: <b>{{ post.temp }} °C</b></p></div>
-        {% endfor %}
-
-{% endblock %}

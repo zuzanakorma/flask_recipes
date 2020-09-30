@@ -1,3 +1,9 @@
 .vscode
 venv
 __pycache__
+app.db
+app/static/post_pics/*
+!app/static/post_pics/meatballs.jpeg
+app/static/profile_pics/*
+!app/static/profile_pics/picture1.jpeg
+migrations/*
