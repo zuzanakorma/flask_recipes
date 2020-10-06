@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Create New Recipes</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}
+        </p>
+        <p>
+            {{ form.time.label }}<br>
+            {{ form.time(size=32) }}
+        </p>
+        <p>
+            {{ form.temp.label }}<br>
+            {{ form.temp(size=32) }}
+        </p>
+        <p>
+            {{ form.recipe.label }}<br>
+            {{ form.recipe() }}
+        </p>
+        <div class="form-group">
+            {{ form.picture.label() }}
+            {{ form.picture(class="form-control-file") }}
+            {% if form.picture.errors %}
+                {% for error in form.picture.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

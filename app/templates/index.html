@@ -9,7 +9,7 @@
           <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
           <small class="text-muted">{{ post.timestamp.strftime('%Y-%m-%d') }}</small>
         </div>
-        <h2><a class="article-title" href="{{ url_for('create_post', post_id=post.id) }}">{{ post.title }}</a></h2>
+        <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
         <p class="article-content">Time: {{ post.time }}</p>
         <p class="article-content">Temperature: {{ post.temperature }}  °C</p>
         <p class="article-content"><b>Recipe:</b> </br>{{ post.recipe }}</p>

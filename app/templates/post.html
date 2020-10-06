@@ -1,34 +1,43 @@
 {% extends "base.html" %}
-
 {% block content %}
-    <h1>Create New Recipes</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.title.label }}<br>
-            {{ form.title(size=32) }}
-        </p>
-        <p>
-            {{ form.time.label }}<br>
-            {{ form.time(size=32) }}
-        </p>
-        <p>
-            {{ form.temp.label }}<br>
-            {{ form.temp(size=32) }}
-        </p>
-        <p>
-            {{ form.recipe.label }}<br>
-            {{ form.recipe() }}
-        </p>
-        <div class="form-group">
-            {{ form.picture.label() }}
-            {{ form.picture(class="form-control-file") }}
-            {% if form.picture.errors %}
-                {% for error in form.picture.errors %}
-                    <span class="text-danger">{{ error }}</span></br>
-                {% endfor %}
-            {% endif %}
+
+<article class="media content-section">
+  <img class="rounded-circle article-img" src="{{  url_for('static', filename='post_pics/' + post.image_file ) }}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+      <small class="text-muted">{{ post.timestamp.strftime('%Y-%m-%d') }}</small>
+      {% if post.author == current_user %}
+        <div>
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+          <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
         </div>
-        <p>{{ form.submit() }}</p>
-    </form>
-{% endblock %}
+      {% endif %}
+  </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <p class="article-content">Time: {{ post.time }}</p>
+      <p class="article-content">Temperature: {{ post.temperature }}  °C</p>
+      <p class="article-content"><b>Recipe:</b> </br>{{ post.recipe }}</p>
+  </div>
+</article>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

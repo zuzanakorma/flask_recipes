@@ -4,13 +4,18 @@
 <div class="content-section">
     <div class="media">
       <img class="rounded-circle account-img" src= "{{ image_file }}">
-      <div class="media-body">
-        <h2 class="account-heading">{{ current_user.username }}</h2>
-        <p class="text-secondary">{{ current_user.email }}</p>
-      </div>
+        <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary">{{ current_user.email }}</p>
+            {% if current_user.about_me %}<p><b>About me: </b><br>{{ current_user.about_me }}</p>{% endif %}
+            {% if current_user.last_seen %}<p>Last seen on: {{ current_user.last_seen.strftime('%Y-%m-%d %H:%M') }}</p>{% endif %}
+        </div>
+        <div class="form-group">
+            <a class="nav-item nav-link" href="{{ url_for('user_posts', username=user.username) }}"><h3>My Posts</h3></a>
+        </div>
     </div>
     
-        <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Account Info</legend>
@@ -38,9 +43,21 @@
                         {% for error in form.email.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
-                    </div>
                 {% else %}    
                     {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+                    </div>
+            <div class="form-group">
+                {{ form.about_me.label(class="form-control-label") }}
+                {% if form.about_me.errors %}
+                    {{ form.about_me(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.about_me.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}    
+                    {{ form.about_me(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -53,12 +70,10 @@
                 {% endfor %}
             {% endif %}
         </div>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-        
-            </div>
-        
-        </form>
-        
-  </div>
-  {% endblock content %}
+        <div class="form-group">
+            {{ form.submit(class="btn btn-secondary btn-sm mt-1 mb-1") }}
+        </div>
+         
+    </form>
+</div>
+{% endblock content %}

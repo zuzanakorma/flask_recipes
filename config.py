@@ -7,11 +7,13 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = os.environ.get('MAIL_PORT') or 587
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') or True
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_NO_REPLY = os.environ.get('EMAIL_NO_REPLY')
+    ADMINS = os.environ.get('MAIL_USERNAME')
     POSTS_PER_PAGE = 3
 
-"""
-The SQLALCHEMY_TRACK_MODIFICATIONS configuration option is set to False 
-to disable a feature of Flask-SQLAlchemy that I do not need, 
-which is to signal the application every time a change is about to be made 
-in the database.
-"""
